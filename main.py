@@ -76,7 +76,7 @@ def load_and_preprocess_image(image_path, segmentation_path, label):
     # segmentation = tf.io.read_file(segmentation_path)
     # segmentation = tf.image.decode_image(segmentation, channels=1, expand_animations=False)
     # segmentation = tf.image.resize(segmentation, [IMG_HEIGHT, IMG_WIDTH])
-    # segmentation = tf.cast(segmentation, tf.float32) / 255.0  # 归一化到[0,1]
+    # segmentation = tf.cast(segmentation, tf.float32) / 255.0
 
     # 将标签转换为one-hot编码
     label = tf.one_hot(label, depth=NUM_CLASSES)
@@ -175,7 +175,6 @@ def ResNetModel(nb_class, input_shape):
 
     output_ten = Dense(nb_class, activation='softmax')(x)
     model = Model(input_ten, output_ten)
-    # model.load_weights("resnet50_weights_tf_dim_ordering_tf_kernels.h5")
 
     return model
 
