@@ -23,7 +23,7 @@ NUM_CLASSES = 200
 
 
 def load_and_preprocess_data(image_dir, segmentation_dir):
-    """加载图像和分割掩码，并准备数据集"""
+    """加载图像和分割掩码，准备数据集"""
     image_paths = []
     segmentation_paths = []
     labels = []
@@ -36,7 +36,6 @@ def load_and_preprocess_data(image_dir, segmentation_dir):
         class_image_dir = os.path.join(image_dir, class_folder)
         class_segmentation_dir = os.path.join(segmentation_dir, class_folder)
 
-        # 检查分割目录是否存在
         if not os.path.exists(class_segmentation_dir):
             print(f"警告: 分割目录 {class_segmentation_dir} 不存在，跳过此类")
             continue
@@ -51,7 +50,7 @@ def load_and_preprocess_data(image_dir, segmentation_dir):
 
             # 构建对应的分割文件路径（分割文件与图像文件同名但扩展名不同）
             seg_file_base = os.path.splitext(image_file)[0]
-            seg_file = seg_file_base + ".png"  # 假设分割文件是PNG格式
+            seg_file = seg_file_base + ".png"
             segmentation_path = os.path.join(class_segmentation_dir, seg_file)
 
             if os.path.exists(segmentation_path):
