@@ -274,7 +274,7 @@ def main():
     print(model)
     
     # 训练模型
-    num_epochs = 2
+    num_epochs = 75
     
     # 训练历史记录容器
     history = {
@@ -389,6 +389,7 @@ def main():
     plt.ylabel('True')
     plt.title('Confusion Matrix')
     plt.xticks(rotation=45, ha='right')
+    plt.yticks(rotation=0)
     plt.tight_layout()
     plt.savefig('confusion_matrix.png', dpi=150)
     plt.close()
