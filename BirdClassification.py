@@ -195,25 +195,11 @@ class ResNetModel(nn.Module):
         self.layer3 = nn.Sequential(
             ConvBlock(512, [256, 256, 1024]),
             IdentityBlock(1024, [256, 256, 1024]),
-            IdentityBlock(1024, [256, 256, 1024]),
             IdentityBlock(1024, [256, 256, 1024])
         )
         
-        # 第四组块
-        self.layer4 = nn.Sequential(
-            ConvBlock(1024, [512, 512, 2048]),
-            IdentityBlock(2048, [512, 512, 2048]),
-            IdentityBlock(2048, [512, 512, 2048])
-        )
-
-        # 第五组块
-        self.layer5 = nn.Sequential(
-            ConvBlock(2048, [1024, 1024, 4096]),
-            IdentityBlock(4096, [1024, 1024, 4096])
-        )
-        
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        self.fc = nn.Linear(4096, num_classes)
+        self.fc = nn.Linear(1024, num_classes)
         
     def forward(self, x):
         x = self.conv1(x)
@@ -224,8 +210,6 @@ class ResNetModel(nn.Module):
         x = self.layer1(x)
         x = self.layer2(x)
         x = self.layer3(x)
-        x = self.layer4(x)
-        x = self.layer5(x)
         
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
@@ -361,7 +345,7 @@ def main():
     plt.legend()
 
     plt.tight_layout()
-    plt.savefig('training_history.png', dpi=150)
+    plt.savefig('training_history_resnet26_20class.png', dpi=150)
     plt.close()
     
     
@@ -391,13 +375,13 @@ def main():
     plt.xticks(rotation=45, ha='right')
     plt.yticks(rotation=0)
     plt.tight_layout()
-    plt.savefig('confusion_matrix.png', dpi=150)
+    plt.savefig('confusion_matrix_resnet26_20class.png', dpi=150)
     plt.close()
 
     
     # 保存模型
-    torch.save(model.state_dict(), 'bird_classification_resnet44_20class.pth')
-    print("模型已保存为 'bird_classification_resnet44_20class.pth'")
+    torch.save(model.state_dict(), 'bird_classification_resnet26_20class.pth')
+    print("模型已保存为 'bird_classification_resnet26_20class.pth'")
 
 
 if __name__ == "__main__":
